@@ -2,10 +2,11 @@ from django.http import JsonResponse
 from main.models import Crop,Stage,Machine
 
 def GetCrops(request):
-    data = {}
+    data = []
     for crop in list(Crop.objects.all()):
-        data[crop.name] = {"image":crop.image,"cid":crop.cid}
-    return JsonResponse(data, content_type='application/json')
+        data.append({"name": crop.name,
+                     "image":crop.image, "id":crop.cid})
+    return JsonResponse(data, content_type='application/json', safe=False)
 
 def GetStages(request,crop_id):
     data = {}
